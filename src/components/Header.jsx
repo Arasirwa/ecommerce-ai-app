@@ -8,11 +8,11 @@ const Header = (props) => {
   return (
     <header className="bg-white shadow-md">
       <nav className="container mx-auto flex items-center justify-between px-6 md:px-8 py-4">
-        <div>
+        <NavLink to="/">
           <h1 className="text-2xl sm:text-3xl font-extrabold text-text-900">
             Shoe <span className="text-primary-500">Store</span>
           </h1>
-        </div>
+        </NavLink>
         <ul className="hidden lg:flex space-x-8 text-lg font-medium">
           <li>
             <NavLink to="/" className="hover:text-primary-500 transition">
