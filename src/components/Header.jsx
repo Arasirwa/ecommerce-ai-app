@@ -3,8 +3,10 @@ import { FiSearch, FiMenu } from "react-icons/fi";
 import { LuCircleUser } from "react-icons/lu";
 import { FaRegHeart } from "react-icons/fa";
 import { BiShoppingBag } from "react-icons/bi";
+import useProductStore from "../stores/useProductStore";
 
 const Header = (props) => {
+  const {setSearchQuery} = useProductStore()
   return (
     <header className="bg-white shadow-md">
       <nav className="container mx-auto flex items-center justify-between px-6 md:px-8 py-4">
@@ -34,6 +36,7 @@ const Header = (props) => {
               type="text"
               placeholder="Search..."
               className="bg-transparent outline-none text-text-900 w-full"
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
             <FiSearch className="text-xl text-text-500" />
           </div>

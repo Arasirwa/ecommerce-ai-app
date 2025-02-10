@@ -1,31 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Banner from "../components/Banner";
 import PoliciesAndSubscriptions from "../components/PoliciesAndSubscriptions";
 import ProductCard from "../components/ProductCard"; // Import the ProductCard component
+import useProductStore from "../stores/useProductStore";
 
 export default function Home() {
-  const [latestProducts, setIsLatestProducts] = useState([]);
-  const [bestSellingProducts, setBestSellingProducts] = useState([]);
-  const [products, setProducts] = useState([]);
+  const { products, fetchProducts } = useProductStore();
+
 
   useEffect(() => {
-    fetch("http://localhost:8000/products")
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data);
-        const latestProducts = data.filter(
-          (latestProduct) => latestProduct.isLatest === true
-        );
-        setIsLatestProducts(latestProducts);
-        const bestSellers = data.filter(
-          (bestSeller) => bestSeller.isBestselling === true
-        );
-        setBestSellingProducts(bestSellers);
-      })
-      .catch((error) => {
-        console.log("Error fetching the products", error);
-      });
+    fetchProducts();
   }, []);
+
+  const bestSellingProducts = products.filter(
+    (product) => product.isBestselling
+  );
+  const latestProducts = products.filter((product) => product.isLatest);
 
   return (
     <>
