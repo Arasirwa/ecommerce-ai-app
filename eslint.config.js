@@ -36,8 +36,8 @@ export default [
         { allowConstantExport: true },
       ],
       // Tailwind CSS specific rules
-      'tailwindcss/classnames-order': 'warn',
-      'tailwindcss/no-custom-classname': 'warn',
+      'tailwindcss/classnames-order': 'off',
+      'tailwindcss/no-custom-classname': 'off',
     },
   },
 ]

@@ -1,17 +1,20 @@
 import { create } from "zustand";
 import Swal from "sweetalert2";
 
+// Load stored filters from localStorage
+const storedFilters = JSON.parse(localStorage.getItem("filters")) || {
+  categories: [],
+  brands: [],
+  genders: [],
+  minPrice: 0,
+  maxPrice: 1500,
+};
+
 const useProductStore = create((set, get) => ({
   products: [],
   filteredProducts: [],
-  searchQuery: "",
-  filters: {
-    categories: [],
-    brands: [],
-    genders: [],
-    minPrice: 0,
-    maxPrice: 1500,
-  },
+  searchQuery: localStorage.getItem("searchQuery") || "",
+  filters: storedFilters, // Use stored filters
   sortBy: "",
 
   // Fetch products from API
@@ -20,6 +23,7 @@ const useProductStore = create((set, get) => ({
       const response = await fetch("http://localhost:8000/products");
       const data = await response.json();
       set({ products: data, filteredProducts: data });
+      get().applyFilters(); // Apply filters after fetching products
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -33,14 +37,17 @@ const useProductStore = create((set, get) => ({
   // Set search query
   setSearchQuery: (query) => {
     set({ searchQuery: query });
+    localStorage.setItem("searchQuery", query); // Store search query
     get().applyFilters();
   },
 
   // Update filters
   setFilters: (newFilters) => {
-    set((state) => ({
-      filters: { ...state.filters, ...newFilters },
-    }));
+    set((state) => {
+      const updatedFilters = { ...state.filters, ...newFilters };
+      localStorage.setItem("filters", JSON.stringify(updatedFilters));
+      return { filters: updatedFilters };
+    });
     get().applyFilters();
   },
 

@@ -9,10 +9,12 @@ export default function Collections() {
     setFilters,
     setSortBy,
     filters,
+    applyFilters,
   } = useProductStore();
 
+  // Fetch products & apply filters on load
   useEffect(() => {
-    fetchProducts();
+    fetchProducts().then(() => applyFilters());
   }, []);
 
   // Handle checkbox change
@@ -30,7 +32,7 @@ export default function Collections() {
   };
 
   return (
-    <main className="container mx-auto px-4 py-10">
+    <main className="container mx-auto px-4 py-10 bg-background-100">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Sidebar - Filters */}
         <aside className="md:col-span-1 bg-white p-6 shadow-md rounded-lg">
@@ -115,9 +117,10 @@ export default function Collections() {
             <select
               name="sort"
               className="border rounded-lg p-2 text-sm"
+              defaultValue={""}
               onChange={(e) => setSortBy(e.target.value)}
             >
-              <option defaultValue>Sort</option>
+              <option value="">Sort</option>
               <option value="highestPrice">High to Low</option>
               <option value="lowestPrice">Low to High</option>
             </select>
