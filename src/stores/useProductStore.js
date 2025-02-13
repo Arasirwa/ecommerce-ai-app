@@ -25,11 +25,6 @@ const useProductStore = create((set, get) => ({
       set({ products: data, filteredProducts: data });
       get().applyFilters(); // Apply filters after fetching products
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-      });
       console.error("Error fetching products:", error);
     }
   },

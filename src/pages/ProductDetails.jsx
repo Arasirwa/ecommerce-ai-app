@@ -1,10 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useProductStore from "../stores/useProductStore";
+import useCartStore from "../stores/useCartStore";
+
 
 export default function ProductDetails() {
   const { id } = useParams();
   const { products, fetchProducts } = useProductStore();
+  const { addToCart } = useCartStore();
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeTab, setActiveTab] = useState("details");
@@ -25,7 +28,18 @@ export default function ProductDetails() {
   }, [foundProduct]);
 
   if (!foundProduct)
-    return <p className="text-center py-10 text-gray-600">Loading product...</p>;
+    return (
+      <p className="text-center py-10 text-gray-600">Loading product...</p>
+    );
+
+  const cartItem = {
+    id: foundProduct.id,
+    name: foundProduct.name,
+    image: selectedImage, // The currently displayed image
+    price: foundProduct.prevPrice,
+    size: selectedSize,
+    quantity: 1, // Default to 1
+  };
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -33,11 +47,12 @@ export default function ProductDetails() {
       alert("Please select a size before adding to cart.");
       return;
     }
-    console.log(`Added ${foundProduct.name} (Size: ${selectedSize}) to cart`);
+    addToCart(cartItem);
   };
 
   const handleAddToWishlist = () => {
-    console.log(`Added ${foundProduct.name} to wishlist`);
+    console.log("ADDED TO FAV");
+    
   };
 
   return (
@@ -74,7 +89,9 @@ export default function ProductDetails() {
         {/* Right - Product Details */}
         <form onSubmit={handleAddToCart} className="w-full md:w-1/2 space-y-4">
           <h1 className="text-2xl font-bold">{foundProduct.name}</h1>
-          <p className="text-lg font-semibold">Price: Ksh {foundProduct.prevPrice}</p>
+          <p className="text-lg font-semibold">
+            Price: Ksh {foundProduct.prevPrice}
+          </p>
 
           {/* Shoe Size Selection */}
           <label className="block mt-4 font-medium">Select Size:</label>
@@ -146,7 +163,9 @@ export default function ProductDetails() {
                 foundProduct.reviews.map((review, index) => (
                   <div key={index} className="border p-6 rounded-lg shadow-md">
                     <p className="text-xl font-medium">{review.username}</p>
-                    <p className="text-yellow-500">⭐⭐⭐⭐⭐ {review.rating}/5</p>
+                    <p className="text-yellow-500">
+                      ⭐⭐⭐⭐⭐ {review.rating}/5
+                    </p>
                     <p className="text-gray-700 mt-2">{review.comment}</p>
                     <p className="text-sm text-gray-500">{review.date}</p>
                   </div>

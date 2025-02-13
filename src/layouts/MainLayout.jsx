@@ -9,7 +9,7 @@ export default function MainLayout() {
   return (
     <>
   <Header isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-      <main>
+      <main className="bg-background-100">
         <Outlet />
       </main>
       <Footer />

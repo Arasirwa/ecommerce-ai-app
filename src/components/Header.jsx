@@ -4,9 +4,11 @@ import { LuCircleUser } from "react-icons/lu";
 import { FaRegHeart } from "react-icons/fa";
 import { BiShoppingBag } from "react-icons/bi";
 import useProductStore from "../stores/useProductStore";
+import useCartStore from "../stores/useCartStore";
 
 const Header = (props) => {
-  const {setSearchQuery} = useProductStore()
+  const { setSearchQuery } = useProductStore();
+  const { cart } = useCartStore();
   return (
     <header className="bg-white shadow-md">
       <nav className="container mx-auto flex items-center justify-between px-6 md:px-8 py-4">
@@ -54,8 +56,9 @@ const Header = (props) => {
           </NavLink>
           <NavLink to="/cart" className="relative">
             <BiShoppingBag className="text-2xl sm:text-3xl text-text-900 hover:text-primary-500 transition" />
+
             <span className="absolute -top-2 -right-2 bg-secondary-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-              3
+              {cart.length}
             </span>
           </NavLink>
           <button
