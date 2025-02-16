@@ -27,7 +27,7 @@ export default function Cart() {
       {/* Cart Items */}
       <div className="space-y-8">
         {cart.map((item) => (
-          <div
+          <Link to={`/product/${item.id}`}
             key={`${item.id}-${item.size}`}
             className="flex flex-col md:flex-row items-center gap-6 p-6 border rounded-lg shadow-md bg-white"
           >
@@ -75,7 +75,7 @@ export default function Cart() {
             >
               <FaTrash size={22} />
             </button>
-          </div>
+          </Link>
         ))}
       </div>
 
