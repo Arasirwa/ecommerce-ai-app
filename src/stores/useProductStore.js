@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import Swal from "sweetalert2";
+
 
 // Load stored filters from localStorage
 const storedFilters = JSON.parse(localStorage.getItem("filters")) || {

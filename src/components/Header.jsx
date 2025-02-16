@@ -5,10 +5,12 @@ import { FaRegHeart } from "react-icons/fa";
 import { BiShoppingBag } from "react-icons/bi";
 import useProductStore from "../stores/useProductStore";
 import useCartStore from "../stores/useCartStore";
+import useWishListStore from "../stores/useWishlistStore";
 
 const Header = (props) => {
   const { setSearchQuery } = useProductStore();
   const { cart } = useCartStore();
+  const { wishList } = useWishListStore();
   return (
     <header className="bg-white shadow-md">
       <nav className="container mx-auto flex items-center justify-between px-6 md:px-8 py-4">
@@ -17,7 +19,7 @@ const Header = (props) => {
             Shoe <span className="text-primary-500">Store</span>
           </h1>
         </NavLink>
-        <ul className="hidden lg:flex space-x-8 text-lg font-medium">
+        <ul className="hidden lg:flex space-x-8 text-xl font-semibold">
           <li>
             <NavLink to="/" className="hover:text-primary-500 transition">
               Home
@@ -51,7 +53,7 @@ const Header = (props) => {
           <NavLink to="/wishlist" className="relative">
             <FaRegHeart className="text-2xl sm:text-3xl text-text-900 hover:text-primary-500 transition" />
             <span className="absolute -top-2 -right-2 bg-secondary-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-              2
+              {wishList.length}
             </span>
           </NavLink>
           <NavLink to="/cart" className="relative">

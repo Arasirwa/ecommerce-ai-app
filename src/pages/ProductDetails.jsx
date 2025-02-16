@@ -2,12 +2,14 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useProductStore from "../stores/useProductStore";
 import useCartStore from "../stores/useCartStore";
+import useWishListStore from "../stores/useWishlistStore";
 
 
 export default function ProductDetails() {
   const { id } = useParams();
   const { products, fetchProducts } = useProductStore();
   const { addToCart } = useCartStore();
+  const {addToWishList} = useWishListStore()
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeTab, setActiveTab] = useState("details");
@@ -51,8 +53,11 @@ export default function ProductDetails() {
   };
 
   const handleAddToWishlist = () => {
-    console.log("ADDED TO FAV");
-    
+    if(!foundProduct.id){
+      alert(message)
+      return
+    }
+    addToWishList(cartItem)
   };
 
   return (
