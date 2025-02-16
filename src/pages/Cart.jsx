@@ -27,20 +27,24 @@ export default function Cart() {
       {/* Cart Items */}
       <div className="space-y-8">
         {cart.map((item) => (
-          <Link to={`/product/${item.id}`}
+          <div
             key={`${item.id}-${item.size}`}
             className="flex flex-col md:flex-row items-center gap-6 p-6 border rounded-lg shadow-md bg-white"
           >
             {/* Image */}
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-28 h-28 object-cover rounded-lg"
-            />
+            <Link to={`/product/${item.id}`}>
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-28 h-28 object-cover rounded-lg"
+              />
+            </Link>
 
             {/* Product Details */}
             <div className="flex-1">
-              <h2 className="text-xl font-semibold">{item.name}</h2>
+              <Link to={`/product/${item.id}`}>
+                <h2 className="text-xl font-semibold">{item.name}</h2>
+              </Link>
               <p className="text-gray-500">Size: {item.size}</p>
               <p className="text-lg font-semibold text-primary">
                 Ksh {item.price * item.quantity}
@@ -51,7 +55,11 @@ export default function Cart() {
             <div className="flex items-center gap-4">
               <button
                 onClick={() =>
-                  updateQuantity(item.id, item.size, Math.max(1, item.quantity - 1))
+                  updateQuantity(
+                    item.id,
+                    item.size,
+                    Math.max(1, item.quantity - 1)
+                  )
                 }
                 className="bg-gray-300 text-gray-800 px-3 py-1 rounded-lg hover:bg-gray-400 transition"
               >
@@ -75,7 +83,7 @@ export default function Cart() {
             >
               <FaTrash size={22} />
             </button>
-          </Link>
+          </div>
         ))}
       </div>
 
@@ -84,7 +92,11 @@ export default function Cart() {
         <div className="flex justify-between text-xl font-semibold">
           <span>Total:</span>
           <span>
-            Ksh {cart.reduce((total, item) => total + item.price * item.quantity, 0)}
+            Ksh{" "}
+            {cart.reduce(
+              (total, item) => total + item.price * item.quantity,
+              0
+            )}
           </span>
         </div>
         <div className="mt-6 flex flex-col sm:flex-row gap-4">
